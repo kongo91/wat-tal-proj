@@ -13,13 +13,13 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("prim");
 
-        /*Graph graph = new Graph();
+        Graph graph = new Graph();
 
-        Vertex vA = new Vertex("A", VertexType.TERMINAL,graph);
-        Vertex vB = new Vertex("B",VertexType.TERMINAL,graph);
+        Vertex vA = new Vertex("A", VertexType.STEINER_POINT,graph);
+        Vertex vB = new Vertex("B",VertexType.STEINER_POINT,graph);
         Vertex vC = new Vertex("C",VertexType.STEINER_POINT,graph);
-        Vertex vD = new Vertex("D",VertexType.TERMINAL,graph);
-        Vertex vE = new Vertex("E",VertexType.TERMINAL,graph);
+        Vertex vD = new Vertex("D",VertexType.STEINER_POINT,graph);
+        Vertex vE = new Vertex("E",VertexType.STEINER_POINT,graph);
 
         Edge eAB = new Edge(2,vA,vB,graph);
         Edge eAD = new Edge(1,vA,vD,graph);
@@ -30,14 +30,18 @@ public class Main {
         Edge eCE = new Edge(2,vC,vE,graph);
         Edge eDE = new Edge(17,vD,vE,graph);
 
+        System.out.print("\n\n\n\n\n\n\n\n\n");
 
-        PrimMST.getMST(graph);*/
+        Hakimi.getSteinerTree(graph);
+
+
+        /*PrimMST.getMST(graph);*/
 
 
 
        // System.out.print(graph.toString());
 
-        System.out.print("\n\nGENERATOR\n\n\n");
+        /*System.out.print("\n\nGENERATOR\n\n\n");
         long time = System.nanoTime();
         Graph g = Graph.generateGraph(160,269,50);
         long time2 = System.nanoTime();
@@ -47,7 +51,7 @@ public class Main {
         PrimMST.getMST(g);
         time2 = System.nanoTime();
         //System.out.println(g);
-        System.out.println("\n\n\nczas alg Prima: "+(time2-time)+" [n]");
+        System.out.println("\n\n\nczas alg Prima: "+(time2-time)+" [n]");*/
 
 
     }

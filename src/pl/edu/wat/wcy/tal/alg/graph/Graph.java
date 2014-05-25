@@ -12,11 +12,14 @@ public class Graph {
 
     private List<Vertex> vertices;
 
+    private List<Vertex> stainerPoints;
+
     private List<Edge> edges;
 
     public Graph(){
         vertices = new LinkedList<Vertex>();
         edges = new LinkedList<Edge>();
+        stainerPoints = new LinkedList<Vertex>();
     }
 
     public void addVertex(Vertex v){
@@ -40,6 +43,14 @@ public class Graph {
 
     public void setEdges(List<Edge> edges) {
         this.edges = edges;
+    }
+
+    public List<Vertex> getStainerPoints() {
+        return stainerPoints;
+    }
+
+    public void setStainerPoints(List<Vertex> stainerPoints) {
+        this.stainerPoints = stainerPoints;
     }
 
     @Override
