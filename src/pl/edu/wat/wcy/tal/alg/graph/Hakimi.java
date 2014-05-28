@@ -31,8 +31,6 @@ public class Hakimi {
             //prim
             //porownanie
 
-            System.out.print("\n\n\nHHHHHHHH\n\n");
-
             Graph g = new Graph();
             List<Vertex> vertices = new ArrayList<Vertex>();
             List<Edge> edges = new ArrayList<Edge>();
@@ -61,36 +59,40 @@ public class Hakimi {
                 }
             }
 
-                for (Edge e : in.getEdges()){
-                    boolean isAdded = false;
-                    for (Vertex v : vertices){
-                        if (e.getFrom().equals(v)){
-                            for (Vertex v1 : vertices){
-                                if (e.getTo().equals(v1)){
-                                    Edge ee = new Edge(e.getWeight(),v,v1,g);
-                                    edges.add(ee);
-                                    isAdded = true;
-                                    break;
-                                }
+            for (Edge e : in.getEdges()){
+                boolean isAdded = false;
+                for (Vertex v : vertices){
+                    if (e.getFrom().equals(v)){
+                        for (Vertex v1 : vertices){
+                            if (e.getTo().equals(v1)){
+                                Edge ee = new Edge(e.getWeight(),v,v1,g);
+                                edges.add(ee);
+                                isAdded = true;
+                                break;
                             }
                         }
-                        if (isAdded) break;
                     }
-
+                    if (isAdded) break;
                 }
 
-                g.setEdges(edges);
-                g.setVertices(vertices);
-                for (Vertex vvv: vertices){
-                    System.out.print("   "+vvv.getName());
-                }
+            }
 
+            g.setEdges(edges);
+            g.setVertices(vertices);
 
+            PrimMST algorithm = new PrimMST();
 
+            Graph tmp = algorithm.getMST(g);
+
+            int tmpWeight = tmp.getWeight();
+            if (min > tmpWeight || min == -1){
+                min = tmpWeight;
+                minGraph = tmp;
+            }
 
         }
 
-        return  null;
+        return  minGraph;
 
     };
 

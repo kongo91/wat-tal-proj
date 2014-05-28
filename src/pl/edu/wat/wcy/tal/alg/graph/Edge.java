@@ -13,6 +13,8 @@ public class Edge implements Comparable<Edge>{
 
     public final static int MAX_EDGE_WEIGHT = 20;
 
+    protected Edge(){}
+
     public Edge(int weight, Vertex from, Vertex to, Graph g) {
         System.out.println("Creating edge width weight: ["+weight+"] from vertex ["+from.getName()+"] to ["+to.getName()+"]");
         this.weight = weight;
@@ -80,5 +82,26 @@ public class Edge implements Comparable<Edge>{
         StringBuilder sb = new StringBuilder();
         sb.append("[").append(from.getName()).append("--").append(weight).append("--").append(to.getName()).append("]");
         return sb.toString();
+    }
+
+    public Edge getCopy(){
+        Edge e = new Edge();
+        e.setFrom(this.from);
+        e.setMarked(this.marked);
+        e.setTo(this.to);
+        e.setWeight(this.getWeight());
+
+        return e;
+    }
+
+    public Edge getCopy(Graph graph){
+        Edge e = new Edge();
+        e.setGraph(graph);
+        e.setFrom(this.from);
+        e.setMarked(this.marked);
+        e.setTo(this.to);
+        e.setWeight(this.getWeight());
+
+        return e;
     }
 }

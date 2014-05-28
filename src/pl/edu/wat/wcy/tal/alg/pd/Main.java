@@ -11,15 +11,13 @@ public class Main {
 
 
     public static void main(String[] args) {
-        System.out.println("prim");
-
         Graph graph = new Graph();
 
         Vertex vA = new Vertex("A", VertexType.TERMINAL,graph);
         Vertex vB = new Vertex("B",VertexType.TERMINAL,graph);
         Vertex vC = new Vertex("C",VertexType.TERMINAL,graph);
         Vertex vD = new Vertex("D",VertexType.STEINER_POINT,graph);
-        Vertex vE = new Vertex("E",VertexType.STEINER_POINT,graph);
+        Vertex vE = new Vertex("E",VertexType.TERMINAL,graph);
 
         Edge eAB = new Edge(2,vA,vB,graph);
         Edge eAD = new Edge(1,vA,vD,graph);
@@ -32,7 +30,7 @@ public class Main {
 
         System.out.print("\n\n\n\n\n\n\n\n\n");
 
-        Hakimi.getSteinerTree(graph);
+        System.out.println(Hakimi.getSteinerTree(graph));
 
 
         /*PrimMST.getMST(graph);*/

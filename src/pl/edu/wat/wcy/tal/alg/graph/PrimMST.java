@@ -5,9 +5,9 @@ import java.util.*;
 /**
  * Created by Konrad on 11.05.14.
  */
-public class PrimMST {
+public class PrimMST implements MSTGettable {
 
-    public static Graph getMST(Graph in){
+    public Graph getMST(Graph in){
 
         Graph mst = new Graph();
 
@@ -41,7 +41,6 @@ public class PrimMST {
             for (Vertex v : verticesMST){
                 for (Edge e : inEdges){
                     if  (!e.isMarked() && ((e.getFrom().equals(v) && !e.getTo().isMarked()) || (e.getTo().equals(v) && !e.getFrom().isMarked()))){
-
                         queue.add(e);
                     }
                 }
@@ -50,16 +49,23 @@ public class PrimMST {
             //wybieramoe majtanszej krawedzi....
             Edge currentEdge = queue.poll();
             currentEdge.setMarked(true);
-            edgesMST.add(currentEdge);
+
+            edgesMST.add(currentEdge.getCopy(mst));
+
+
             //i przyleglego do niej wierzcholka
             currentVertex = currentEdge.getFrom().isMarked() ? currentEdge.getTo() : currentEdge.getFrom();
             currentVertex.setMarked(true);
-            verticesMST.add(currentVertex);
+            verticesMST.add(currentVertex.getCopy(mst));
+
 
             queue.clear();
 
         }
 
+
+        mst.setEdges(edgesMST);
+        mst.setVertices(verticesMST);
 
         /*System.out.println("MST\n\n\n");
         for (Vertex v : verticesMST)
@@ -69,7 +75,7 @@ public class PrimMST {
             System.out.println(e.toString());
         System.out.println("\n!MST\n\n");*/
 
-        return in;
+        return mst;
     }
 
 }

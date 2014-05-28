@@ -29,6 +29,19 @@ public class Vertex {
 
     }
 
+    public void correctEdges(){
+
+        List<Edge> edges = new ArrayList<Edge>();
+        for (Edge e : graph.getEdges()){
+            if (e.getFrom().getName().equals(name)){
+                e.setFrom(this);
+            }else if (e.getTo().getName().equals(name)){
+                e.setTo(this);
+            }
+        }
+
+    }
+
     public List<Vertex> getNeighbors(){
 
         List<Vertex> neighbors = new ArrayList<Vertex>();
@@ -53,13 +66,13 @@ public class Vertex {
     }
 
     public void setName(String name) {
-        this.name = vertexType==VertexType.STEINER_POINT ? name+"^" : name;
+        this.name = name;
     }
 
     public Vertex(String name, VertexType type,Graph g){
         System.out.println("Creating ["+type+"] with name: ["+name+"]");
         this.vertexType = type;
-        this.name = vertexType==VertexType.STEINER_POINT ? name+"^" : name;
+        this.name = name;
         graph = g;
         graph.addVertex(this);
     }
@@ -70,8 +83,6 @@ public class Vertex {
 
     public void setVertexType(VertexType vertexType) {
         this.vertexType = vertexType;
-        if (vertexType.equals(VertexType.STEINER_POINT))
-            name = name + "^";
     }
 
     public void setGraph(Graph graph) {
