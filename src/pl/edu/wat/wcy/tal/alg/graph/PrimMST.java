@@ -19,21 +19,31 @@ public class PrimMST {
 
         PriorityQueue<Edge> queue = new PriorityQueue<Edge>();
 
+        //czeszczenie zaznaczen na wierzcholkach
+        for (Vertex v : in.getVertices()){
+            v.setMarked(false);
+        }
+        for (Edge e : in.getEdges()){
+            e.setMarked(false);
+        }
+
         //Losowanie wierzchołka początkoweego
 
         Random random = new Random();
 
         Vertex currentVertex = inVertex.get(random.nextInt(inVertex.size()));
         currentVertex.setMarked(true);
-        verticesMST.add(currentVertex);
+        verticesMST.add(currentVertex.getCopy(mst));
 
         while(verticesMST.size()!=inVertex.size()){
 
             //dodawanie krawędzi przyległych do MST do kolejki
             for (Vertex v : verticesMST){
                 for (Edge e : inEdges){
-                    if  (!e.isMarked() && ((e.getFrom().equals(v) && !e.getTo().isMarked()) || (e.getTo().equals(v) && !e.getFrom().isMarked())))
+                    if  (!e.isMarked() && ((e.getFrom().equals(v) && !e.getTo().isMarked()) || (e.getTo().equals(v) && !e.getFrom().isMarked()))){
+
                         queue.add(e);
+                    }
                 }
             }
 

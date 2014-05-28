@@ -15,6 +15,7 @@ public class Vertex {
     protected VertexType vertexType;
     protected boolean marked;
 
+    protected  Vertex(){}
 
     public List<Edge> getEdges(){
 
@@ -120,4 +121,22 @@ public class Vertex {
         result = 31 * result + (vertexType != null ? vertexType.hashCode() : 0);
         return result;
     }
+
+    public Vertex getCopy(){
+        Vertex v = new Vertex();
+        v.setMarked(this.marked);
+        v.setVertexType(this.vertexType);
+        v.setName(this.name);
+        return v;
+    }
+
+    public Vertex getCopy(Graph graph){
+        Vertex v = new Vertex();
+        v.setGraph(graph);
+        v.setMarked(this.marked);
+        v.setVertexType(this.vertexType);
+        v.setName(this.name);
+        return v;
+    }
+
 }

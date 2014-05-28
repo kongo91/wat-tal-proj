@@ -22,6 +22,18 @@ public class Edge implements Comparable<Edge>{
         graph.addEdge(this);
     }
 
+    public void setFrom(Vertex from) {
+        this.from = from;
+    }
+
+    public void setTo(Vertex to) {
+        this.to = to;
+    }
+
+    public void setGraph(Graph graph) {
+        this.graph = graph;
+    }
+
     public Vertex getFrom() {
         return from;
     }

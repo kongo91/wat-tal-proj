@@ -147,5 +147,15 @@ public class Graph {
         return g;
     }
 
+    public int getWeight(){
+        int out = 0;
+        for (Edge e : edges){
+            out = out + e.getWeight();
+        }
+
+        return out;
+
+    }
+
 
 }

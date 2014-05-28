@@ -15,9 +15,9 @@ public class Main {
 
         Graph graph = new Graph();
 
-        Vertex vA = new Vertex("A", VertexType.STEINER_POINT,graph);
-        Vertex vB = new Vertex("B",VertexType.STEINER_POINT,graph);
-        Vertex vC = new Vertex("C",VertexType.STEINER_POINT,graph);
+        Vertex vA = new Vertex("A", VertexType.TERMINAL,graph);
+        Vertex vB = new Vertex("B",VertexType.TERMINAL,graph);
+        Vertex vC = new Vertex("C",VertexType.TERMINAL,graph);
         Vertex vD = new Vertex("D",VertexType.STEINER_POINT,graph);
         Vertex vE = new Vertex("E",VertexType.STEINER_POINT,graph);
 

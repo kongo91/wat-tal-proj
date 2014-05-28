@@ -24,13 +24,68 @@ public class Hakimi {
 
         Graph minGraph = null;
 
+
         for (Set<Vertex> vL : subsets){
             //przygotuj graf
             //w petli usun vierzcholki z grafu
             //prim
             //porownanie
 
+            System.out.print("\n\n\nHHHHHHHH\n\n");
+
             Graph g = new Graph();
+            List<Vertex> vertices = new ArrayList<Vertex>();
+            List<Edge> edges = new ArrayList<Edge>();
+
+            if (vL.size()!=0){
+
+
+                for (Vertex v : in.getVertices()){
+                    for (Vertex vVL : vL){
+                        if (vVL.equals(v) || v.getVertexType().equals(VertexType.TERMINAL)){
+                            Vertex vCopy = v.getCopy();
+                            vCopy.setGraph(g);
+                            vertices.add(vCopy);
+                            break;
+                        }
+                    }
+                }
+            }else{
+                for (Vertex v : in.getVertices()){
+                    if (v.getVertexType().equals(VertexType.TERMINAL)){
+                        Vertex vCopy = v.getCopy();
+                        vCopy.setGraph(g);
+                        vertices.add(vCopy);
+                    }
+
+                }
+            }
+
+                for (Edge e : in.getEdges()){
+                    boolean isAdded = false;
+                    for (Vertex v : vertices){
+                        if (e.getFrom().equals(v)){
+                            for (Vertex v1 : vertices){
+                                if (e.getTo().equals(v1)){
+                                    Edge ee = new Edge(e.getWeight(),v,v1,g);
+                                    edges.add(ee);
+                                    isAdded = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (isAdded) break;
+                    }
+
+                }
+
+                g.setEdges(edges);
+                g.setVertices(vertices);
+                for (Vertex vvv: vertices){
+                    System.out.print("   "+vvv.getName());
+                }
+
+
 
 
         }
