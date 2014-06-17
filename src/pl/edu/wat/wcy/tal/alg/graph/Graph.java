@@ -1,5 +1,7 @@
 package pl.edu.wat.wcy.tal.alg.graph;
 
+import sun.print.resources.serviceui_es;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -92,10 +94,12 @@ public class Graph {
         Vertex vv1 = vertices.get(i);
         for (int m = 1; m <= 3; m++){
             i++;
-            while(i < (m * (v/3))){
+            System.out.println("vv1: "+vv1.getName());
+            while(i < ((m * (v/3))-1)+v%3){
                 Vertex vv2 = vertices.get(i);
                 Edge e = new Edge(r.nextInt(Edge.MAX_EDGE_WEIGHT),vv1,vv2,g);
                 edges.add(e);
+                System.out.println("\tvv2: "+vv2.getName());
                 i++;
             }
             Edge e = new Edge(r.nextInt(Edge.MAX_EDGE_WEIGHT),vv1,vertices.get(i),g);
@@ -142,6 +146,10 @@ public class Graph {
                 }
             }
             vv.setVertexType(VertexType.STEINER_POINT);
+        }
+
+        for (Vertex vvvv : g.getVertices()){
+            if (vvvv.getEdges().size()==0) throw new IllegalArgumentException("v: "+vvvv.getName());
         }
 
         return g;

@@ -84,8 +84,9 @@ public class Hakimi {
 
             Graph tmp = algorithm.getMST(g);
 
-            int tmpWeight = tmp.getWeight();
-            if (min > tmpWeight || min == -1){
+            int tmpWeight = -1;
+            if (tmp!= null)  tmpWeight = tmp.getWeight();
+            if ((tmpWeight != -1) && (min > tmpWeight || min == -1)){
                 min = tmpWeight;
                 minGraph = tmp;
             }

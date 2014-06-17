@@ -144,6 +144,7 @@ public class Vertex {
     public Vertex getCopy(Graph graph){
         Vertex v = new Vertex();
         v.setGraph(graph);
+        graph.addVertex(this);
         v.setMarked(this.marked);
         v.setVertexType(this.vertexType);
         v.setName(this.name);

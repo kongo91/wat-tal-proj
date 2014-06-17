@@ -5,11 +5,11 @@ package pl.edu.wat.wcy.tal.alg.graph;
  */
 public class Edge implements Comparable<Edge>{
 
-    private int weight;
-    private Vertex from;
-    private Vertex to;
-    private Graph graph;
-    private boolean marked;
+    protected int weight;
+    protected Vertex from;
+    protected Vertex to;
+    protected Graph graph;
+    protected boolean marked;
 
     public final static int MAX_EDGE_WEIGHT = 20;
 
@@ -97,6 +97,7 @@ public class Edge implements Comparable<Edge>{
     public Edge getCopy(Graph graph){
         Edge e = new Edge();
         e.setGraph(graph);
+        graph.addEdge(this);
         e.setFrom(this.from);
         e.setMarked(this.marked);
         e.setTo(this.to);

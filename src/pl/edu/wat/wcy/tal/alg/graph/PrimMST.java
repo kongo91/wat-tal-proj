@@ -48,6 +48,9 @@ public class PrimMST implements MSTGettable {
 
             //wybieramoe majtanszej krawedzi....
             Edge currentEdge = queue.poll();
+            if (currentEdge==null) return null;
+
+
             currentEdge.setMarked(true);
 
             edgesMST.add(currentEdge.getCopy(mst));
