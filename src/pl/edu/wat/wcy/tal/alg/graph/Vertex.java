@@ -1,8 +1,6 @@
 package pl.edu.wat.wcy.tal.alg.graph;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -70,7 +68,7 @@ public class Vertex {
     }
 
     public Vertex(String name, VertexType type,Graph g){
-        System.out.println("Creating ["+type+"] with name: ["+name+"]");
+        //System.out.println("Creating ["+type+"] with name: ["+name+"]");
         this.vertexType = type;
         this.name = name;
         graph = g;

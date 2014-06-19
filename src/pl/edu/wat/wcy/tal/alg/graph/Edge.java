@@ -16,7 +16,7 @@ public class Edge implements Comparable<Edge>{
     protected Edge(){}
 
     public Edge(int weight, Vertex from, Vertex to, Graph g) {
-        System.out.println("Creating edge width weight: ["+weight+"] from vertex ["+from.getName()+"] to ["+to.getName()+"]");
+        //System.out.println("Creating edge width weight: ["+weight+"] from vertex ["+from.getName()+"] to ["+to.getName()+"]");
         this.weight = weight;
         this.from = from;
         this.to = to;
