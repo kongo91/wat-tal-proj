@@ -1,7 +1,7 @@
 package pl.edu.wat.wcy.tal.alg.graph;
 
+import pl.edu.wat.wcy.tal.alg.algorithms.DijkstraAlgorithm;
 import pl.edu.wat.wcy.tal.alg.exceptions.NoResultException;
-import pl.edu.wat.wcy.tal.alg.vg.DijkstraAlgorithm;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,9 +1,6 @@
 package pl.edu.wat.wcy.tal.alg.graph;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by Konrad on 11.05.14.
@@ -159,6 +156,84 @@ public class Graph {
 
         return out;
 
+    }
+
+    public static Graph genereteGraphFromParams(List<String> lines){
+
+        ArrayList<String> vertexLines = new ArrayList<String>();
+        ArrayList<String> edgesLines = new ArrayList<String>();
+
+        for (String line : lines){
+
+            String[] vTab = line.split(";");
+            if (vTab[0].equalsIgnoreCase("v") || vTab[0].equalsIgnoreCase("t") || vTab[0].equalsIgnoreCase("s")){
+                vertexLines.add(line);
+            }else if (vTab[0].equalsIgnoreCase("e")){
+                edgesLines.add(line);
+            }
+
+        }
+
+        Graph out = new Graph();
+
+        List<Vertex> vertices = new ArrayList<Vertex>();
+        LinkedList<Edge> edges = new LinkedList<Edge>();
+
+        for (String line : vertexLines){
+
+            Vertex v = new Vertex();
+            v.setGraph(out);
+            v.setMarked(false);
+
+            String vTab[] = line.split(";");
+            if (vTab.length!= 2) throw new IllegalArgumentException("Bad number of parameters in line: "+line);
+            if (vTab[0].equalsIgnoreCase("v") || vTab[0].equalsIgnoreCase("t")){
+                v.setVertexType(VertexType.TERMINAL);
+            }else if (vTab[0].equalsIgnoreCase("s")){
+                v.setVertexType(VertexType.STEINER_POINT);
+            }else {
+                throw new IllegalArgumentException("Unknown type of vertex in line: "+line);
+            }
+
+            if (vTab[1]!=null){
+                v.setName(vTab[1]);
+            }else throw new IllegalArgumentException("Could not read vertex name i line: "+line);
+
+            vertices.add(v);
+        }
+
+        for(String line : edgesLines){
+
+            Edge e = new Edge();
+            e.setGraph(out);
+            e.setMarked(false);
+
+            String eTab[] = line.split(";");
+            if (eTab.length != 4) throw new IllegalArgumentException("Bad number of parameter in line"+line);
+            if (eTab[1] != null){
+                Integer weight = Integer.parseInt(eTab[1]);
+                e.setWeight(weight);
+            }else{
+                throw new IllegalArgumentException("Could not read weight of edge in line: "+line);
+            }
+
+            if (eTab[2]==null) throw new IllegalArgumentException("Could not read vertex \"from\" of edge in line: "+line);
+            if (eTab[3]==null) throw new IllegalArgumentException("Could not read vertex \"to\" of edge in line: "+line);
+
+            for (Vertex v : vertices){
+                if (v.getName().equalsIgnoreCase(eTab[2])) e.setFrom(v);
+                if (v.getName().equalsIgnoreCase(eTab[3])) e.setTo(v);
+            }
+            if (e.getTo()==null)  throw new IllegalArgumentException("Vertex \"to\" of edge is not defined in line: "+line);
+            if (e.getFrom()==null)  throw new IllegalArgumentException("Vertex \"from\" of edge is not defined in line: "+line);
+
+            edges.add(e);
+        }
+
+        out.setEdges(edges);
+        out.setVertices(vertices);
+
+        return out;
     }
 
 

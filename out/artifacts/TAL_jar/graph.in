@@ -1,0 +1,14 @@
+asd
+T;A;
+S;B;
+T;C;
+S;D;
+T;E;
+E;2;A;B;
+E;1;A;D;
+E;2;A;C;
+E;4;B;C;
+E;3;B;D;
+E;3;B;E;
+E;2;C;E;
+E;17;D;C;
