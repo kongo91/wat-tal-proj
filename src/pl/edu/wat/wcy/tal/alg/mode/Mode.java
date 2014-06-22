@@ -35,7 +35,7 @@ public class Mode {
         Algorithm.copmareAlgorithmOnGraph(g,c);
     }
 
-    public static void generate(String line){
+    public static void series(String line){
 
         double c = 0.5;
 

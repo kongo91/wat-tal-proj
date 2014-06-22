@@ -57,9 +57,9 @@ public class Algorithm {
         }
 
         StringBuilder builderH = new StringBuilder();
-        builderH.append("| Hakimi").append(" \t| ").append("PrimDijkstra").append(" \t| ").append("D").append(" \t|\n");
+        builderH.append("| N").append(" \t| ").append("Hakimi").append(" \t| ").append("PrimDijkstra").append(" \t| ").append("D").append(" \t|\n");
         for (int j = 0; j < series; j++){
-            builderH.append("| ").append(timesH[j]).append(" \t\t| ").append(timesPD[j]).append(" \t\t| ").append(timesH[j]-timesPD[j]).append(" \t|\n");
+            builderH.append("| ").append(j+1).append(" \t| ").append(timesH[j]).append(" \t\t| ").append(timesPD[j]).append(" \t\t| ").append(timesH[j]-timesPD[j]).append(" \t|\n");
         }
         System.out.println(builderH+"\n");
     }

@@ -43,8 +43,8 @@ public class Main {
                 }catch (Exception e ){}
             }
             Mode.userGraph(lines,c);
-        }else if (args[0].equalsIgnoreCase("generate")){
-            Mode.generate(lines.get(0));
+        }else if (args[0].equalsIgnoreCase("series")){
+            Mode.series(lines.get(0));
         }else if (args[0].equalsIgnoreCase("auto")){
             Mode.auto(lines.get(0));
         }else {
