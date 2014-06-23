@@ -1,0 +1,21 @@
+N;Hakimi;PrimDijkstra;Lepszy;%
+1;3;4;Hakimi;25%;
+2;5,6667;1;PrimDijkstra;82,35%;
+3;7,6667;3,3333;PrimDijkstra;56,52%;
+4;9;3,6667;PrimDijkstra;59,26%;
+5;6;2;PrimDijkstra;66,67%;
+6;3;5,6667;Hakimi;47,06%;
+7;25;1;PrimDijkstra;96%;
+8;13;3;PrimDijkstra;76,92%;
+9;7,3333;5,6667;PrimDijkstra;22,73%;
+10;30;4;PrimDijkstra;86,67%;
+11;117;3,3333;PrimDijkstra;97,15%;
+12;158,3333;3,6667;PrimDijkstra;97,68%;
+13;181,3333;4,6667;PrimDijkstra;97,43%;
+14;764,6667;5,6667;PrimDijkstra;99,26%;
+15;310;9,6667;PrimDijkstra;96,88%;
+16;359,6667;14,3333;PrimDijkstra;96,01%;
+17;1 427,6667;13;PrimDijkstra;99,09%;
+18;1 893,6667;18;PrimDijkstra;99,05%;
+19;7 289,6667;18;PrimDijkstra;99,75%;
+20;15 891;35,3333;PrimDijkstra;99,78%;

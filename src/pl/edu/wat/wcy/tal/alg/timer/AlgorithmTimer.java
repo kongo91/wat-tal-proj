@@ -10,8 +10,11 @@ import pl.edu.wat.wcy.tal.alg.interfaces.AlgorithmInterface;
 public class AlgorithmTimer<T extends AlgorithmInterface> {
 
     private AlgorithmInterface alg;
+    private Runtime runtime;
     private long timebefore;
     private long timeafter;
+    private long memorybefore;
+    private long memoryafter;
 
     public void instanceAlgorithmObject(Class<T> clazz) throws IllegalAccessException, InstantiationException {
         alg = clazz.newInstance();
@@ -19,7 +22,9 @@ public class AlgorithmTimer<T extends AlgorithmInterface> {
 
     private void before() {
         System.out.println("\nStart algorithm "+alg.getClass().getName());
+        runtime = Runtime.getRuntime();
         timebefore = System.currentTimeMillis();
+        memorybefore = (runtime.totalMemory() - runtime.freeMemory());
     }
 
     /**
@@ -28,7 +33,7 @@ public class AlgorithmTimer<T extends AlgorithmInterface> {
      * @param params parameters to algorithms
      * @return time in nanosecond of algorithm
      */
-    public long doAlgorithm(Class<T> clazz, Graph in, double... params) throws BadAlgorithmException {
+    public long[] doAlgorithm(Class<T> clazz, Graph in, double... params) throws BadAlgorithmException {
 
         try {
 
@@ -37,7 +42,9 @@ public class AlgorithmTimer<T extends AlgorithmInterface> {
             alg.getSteinerTree(in,params);
             after();
 
-            return timeafter - timebefore;
+            long[] results = {timeafter - timebefore, memoryafter - memorybefore};
+
+            return results;
 
         } catch (IllegalAccessException e) {
             e.printStackTrace();
@@ -51,6 +58,7 @@ public class AlgorithmTimer<T extends AlgorithmInterface> {
 
     private void after(){
         timeafter = System.currentTimeMillis();
+        memoryafter = (runtime.totalMemory() - runtime.freeMemory());
         System.out.println(".\n.\n.\nStop algorithm "+alg.getClass().getName()+"\n");
     }
 

@@ -33,8 +33,8 @@ public class Algorithm {
 
         for (int r = 0 ; r < repeats; r++){
             try {
-                resultsH[r] = algorithmHakimiTimer.doAlgorithm(Hakimi.class,g,0);
-                resultsPD[r] = algorithmPrimaDijkstraTimer.doAlgorithm(PrimaDijkstra.class,g,c);
+                resultsH[r] = algorithmHakimiTimer.doAlgorithm(Hakimi.class,g,0)[0];
+                resultsPD[r] = algorithmPrimaDijkstraTimer.doAlgorithm(PrimaDijkstra.class,g,c)[0];
 
                 sumH += resultsH[r];
                 sumPD += resultsPD[r];
@@ -51,6 +51,21 @@ public class Algorithm {
         System.out.println("Hakimi time: \t\t"+timeH+" [ns]");
         System.out.println("PrimDijkstra time: \t"+timePD+" [ns]");
         System.out.println("Difference time: \t"+(timePD - timeH)+" [ns]");
+
+        StringBuilder builderH = new StringBuilder();
+        StringBuilder builderH2 = new StringBuilder();
+
+        NumberFormat nf4 = NumberFormat.getInstance();
+        nf4.setMaximumFractionDigits(4);
+        NumberFormat nf2 = NumberFormat.getInstance();
+        nf2.setMaximumFractionDigits(2);
+
+        builderH.append("| S").append(" \t| ").append("Hakimi").append(" \t\t\t| ").append("PrimDijkstra").append(" \t\t\t| ").append("D").append(" \t|\n");
+        for (int j = 0; j < repeats; j++){
+            builderH.append("| ").append(j + 1).append(" \t| ").append(nf4.format(resultsH[j])).append(" \t\t\t| ").append(nf4.format(resultsPD[j])).append(" \t\t\t| ").append(nf4.format(resultsH[j]-resultsPD[j])).append(" \t|\n");
+        }
+
+        System.out.println(builderH.toString());
     }
 
     public static void copmareAlgorithmOnGraphSeries(double c, int n, int series, int repeats){
@@ -60,13 +75,19 @@ public class Algorithm {
 
         int vertex = 3+n;
         int edges = vertex + (vertex/2)+vertex%n;
-        int steinerPoints = 1;
+        int steinerPoints = 1+n;
 
         double timesH[] = new double[series];
         double timesPD[] = new double[series];
 
+        double memoryH[] = new double[series];
+        double memoryPD[] = new double[series];
+
         long resultsH[][] = new long[series][repeats];
         long resultsPD[][] = new long[series][repeats];
+
+        long resultsMemH[][] = new long[series][repeats];
+        long resultsMemPD[][] = new long[series][repeats];
 
         for (int j = 0; j < series; j++){
 
@@ -75,13 +96,22 @@ public class Algorithm {
             long sumH = 0;
             long sumPD = 0;
 
+            long sumHM = 0;
+            long sumPDM = 0;
+
             for (int r = 0 ; r < repeats ; r++){
                 try {
-                    resultsH[j][r] = algorithmHakimiTimer.doAlgorithm(Hakimi.class,gIn,0);
-                    resultsPD[j][r] = algorithmPrimaDijkstraTimer.doAlgorithm(PrimaDijkstra.class,gIn,c);
+                    resultsH[j][r] = algorithmHakimiTimer.doAlgorithm(Hakimi.class,gIn,0)[0];
+                    resultsPD[j][r] = algorithmPrimaDijkstraTimer.doAlgorithm(PrimaDijkstra.class,gIn,c)[0];
+
+                    resultsMemH[j][r] = algorithmHakimiTimer.doAlgorithm(Hakimi.class,gIn,0)[1];
+                    resultsMemPD[j][r] = algorithmPrimaDijkstraTimer.doAlgorithm(PrimaDijkstra.class,gIn,c)[1];
 
                     sumH += resultsH[j][r];
                     sumPD += resultsPD[j][r];
+
+                    sumHM += resultsMemH[j][r];
+                    sumPDM += resultsMemPD[j][r];
 
                 } catch (BadAlgorithmException e) {
                     e.printStackTrace();
@@ -91,9 +121,12 @@ public class Algorithm {
             timesH[j] = (double)sumH/(double)repeats;
             timesPD[j] = (double)sumPD/(double)repeats;
 
+            memoryH[j] = (double)sumHM/(double)repeats;
+            memoryPD[j] = (double)sumPDM/(double)repeats;
+
             vertex++;
             edges += vertex/2;
-            steinerPoints += j%2;
+            steinerPoints++;//= j%2;
 
         }
 
@@ -127,13 +160,42 @@ public class Algorithm {
         }
         //System.out.println(builderH+"\n");
 
+
+        StringBuilder builderM = new StringBuilder();
+        StringBuilder builderM2 = new StringBuilder();
+
+
+        builderM.append("| N").append(" \t| ").append("Hakimi").append(" \t\t\t| ").append("PrimDijkstra").append(" \t\t\t| ").append("D").append(" \t|\n");
+        builderM2.append("N").append(";").append("Hakimi").append(";").append("PrimDijkstra").append(";").append("Lepszy").append(";").append("%").append("\n");
+
+        for (int j = 0; j < series; j++){
+            builderM.append("| ").append(j + 1).append(" \t| ").append(nf4.format(memoryH[j])).append(" \t\t\t| ").append(nf4.format(memoryPD[j])).append(" \t\t\t| ").append(nf4.format(memoryH[j]-memoryPD[j])).append(" \t|\n");
+            builderM2.append(j+1).append(";").append(nf4.format(memoryH[j])).append(";").append(nf4.format(memoryPD[j])).append(";");
+            if (memoryH[j] > memoryPD[j]){
+                builderM2.append("PrimDijkstra").append(";");
+                double p = ((memoryH[j]-memoryPD[j])/memoryH[j])*100.0;
+                builderM2.append(nf2.format(p)+"%").append(";");
+            }else if (memoryH[j] < memoryPD[j]){
+                builderM2.append("Hakimi").append(";");
+                double p = ((memoryPD[j]-memoryH[j])/memoryPD[j])*100.0;
+                builderM2.append(nf2.format(p)+"%").append(";");
+            }else{
+                builderM2.append("Brak").append(";");
+                builderM2.append("0%").append(";");
+            }
+            builderM2.append("\n");
+        }
+
+
+
+
         try {
 
             String content = builderH2.toString();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_hhmmss");
             String d = sdf.format(new Date());
 
-            File file = new File("./results/series_"+d+".csv");
+            File file = new File("./results/time_series_"+d+".csv");
 
             if (!file.exists()) {
                 file.createNewFile();
@@ -144,7 +206,23 @@ public class Algorithm {
             bw.write(content.replace(".",","));
             bw.close();
 
-            System.out.println("Wynik w formacie CSV wyeksportowano do pliku: "+file.getAbsolutePath());
+
+            String content2 = builderM2.toString();
+            SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd_hhmmss");
+            String d2 = sdf.format(new Date());
+
+            File file2 = new File("./results/memory_series_"+d+".csv");
+
+            if (!file2.exists()) {
+                file2.createNewFile();
+            }
+
+            FileWriter fw2 = new FileWriter(file2.getAbsoluteFile());
+            BufferedWriter bw2 = new BufferedWriter(fw2);
+            bw2.write(content2.replace(".",","));
+            bw2.close();
+
+            System.out.println("Wynik w formacie CSV wyeksportowano do plików: \n(1.) "+file.getAbsolutePath()+"\n(1.) "+file2.getAbsolutePath());
 
         } catch (IOException e) {
             e.printStackTrace();
