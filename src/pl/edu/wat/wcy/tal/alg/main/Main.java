@@ -37,12 +37,16 @@ public class Main {
 
         if (args[0].equalsIgnoreCase("graph")){
             double c = 0.5;
-            if (args.length == 3){
+            int repeats = 100;
+            if (args.length >= 3){
                 try{
                     c = Double.parseDouble(args[2]);
                 }catch (Exception e ){}
+                if (args.length >= 4){
+                    repeats = Integer.parseInt(args[3]);
+                }
             }
-            Mode.userGraph(lines,c);
+            Mode.userGraph(lines,c,repeats);
         }else if (args[0].equalsIgnoreCase("series")){
             Mode.series(lines.get(0));
         }else if (args[0].equalsIgnoreCase("auto")){
