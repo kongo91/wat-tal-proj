@@ -17,6 +17,22 @@ import java.util.Date;
  */
 public class Algorithm {
 
+    public static class GraphHolder{
+
+        public Graph out;
+
+        public GraphHolder() {
+        }
+
+        public Graph getOut() {
+            return out;
+        }
+
+        public void setOut(Graph out) {
+            this.out = out;
+        }
+    }
+
     public static void copmareAlgorithmOnGraph(Graph g, double c, int repeats){
 
         double timeH = 0.0;
@@ -31,10 +47,13 @@ public class Algorithm {
         long sumH = 0;
         long sumPD = 0;
 
+        GraphHolder holderH = new GraphHolder();
+        GraphHolder holderPD = new GraphHolder();
+
         for (int r = 0 ; r < repeats; r++){
             try {
-                resultsH[r] = algorithmHakimiTimer.doAlgorithm(Hakimi.class,g,0)[0];
-                resultsPD[r] = algorithmPrimaDijkstraTimer.doAlgorithm(PrimaDijkstra.class,g,c)[0];
+                resultsH[r] = algorithmHakimiTimer.doAlgorithm(Hakimi.class,g,holderH,0)[0];
+                resultsPD[r] = algorithmPrimaDijkstraTimer.doAlgorithm(PrimaDijkstra.class,g,holderPD,c)[0];
 
                 sumH += resultsH[r];
                 sumPD += resultsPD[r];
@@ -66,6 +85,13 @@ public class Algorithm {
         }
 
         System.out.println(builderH.toString());
+        System.out.println("\n\nGraf wygenerowany za pomoca Hakimi");
+        System.out.println(holderH.getOut());
+        System.out.println("\n\nGraf wygenerowany za pomoca Prima-Dijkstry");
+        System.out.println(holderPD.getOut());
+        System.out.println("Waga grafu wygenerowana za pomoca algorytmu Hakimi: "+holderH.getOut().getWeight());
+        System.out.println("Waga grafu wygenerowana za pomoca algorytmu Prima-Dijkstry: "+holderPD.getOut().getWeight());
+
     }
 
     public static void copmareAlgorithmOnGraphSeries(double c, int n, int series, int repeats){
@@ -89,9 +115,17 @@ public class Algorithm {
         long resultsMemH[][] = new long[series][repeats];
         long resultsMemPD[][] = new long[series][repeats];
 
+
+        GraphHolder holderH = new GraphHolder();
+        GraphHolder holderPD = new GraphHolder();
+
+
         for (int j = 0; j < series; j++){
 
             Graph gIn = Graph.generateGraph(vertex,edges,steinerPoints);
+
+            System.out.println("Wygenerowany graf:");
+            System.out.println(gIn);
 
             long sumH = 0;
             long sumPD = 0;
@@ -99,13 +133,17 @@ public class Algorithm {
             long sumHM = 0;
             long sumPDM = 0;
 
+
             for (int r = 0 ; r < repeats ; r++){
                 try {
-                    resultsH[j][r] = algorithmHakimiTimer.doAlgorithm(Hakimi.class,gIn,0)[0];
-                    resultsPD[j][r] = algorithmPrimaDijkstraTimer.doAlgorithm(PrimaDijkstra.class,gIn,c)[0];
 
-                    resultsMemH[j][r] = algorithmHakimiTimer.doAlgorithm(Hakimi.class,gIn,0)[1];
-                    resultsMemPD[j][r] = algorithmPrimaDijkstraTimer.doAlgorithm(PrimaDijkstra.class,gIn,c)[1];
+                    long tabH[] = algorithmHakimiTimer.doAlgorithm(Hakimi.class,gIn,holderH,0);
+                    long tabPD[] = algorithmPrimaDijkstraTimer.doAlgorithm(PrimaDijkstra.class,gIn,holderPD,c);
+                    resultsH[j][r] = tabH[0];
+                    resultsPD[j][r] = tabPD[0];
+
+                    resultsMemH[j][r] = tabH[1];
+                    resultsMemPD[j][r] = tabPD[1];
 
                     sumH += resultsH[j][r];
                     sumPD += resultsPD[j][r];
@@ -223,6 +261,16 @@ public class Algorithm {
             bw2.close();
 
             System.out.println("Wynik w formacie CSV wyeksportowano do plików: \n(1.) "+file.getAbsolutePath()+"\n(1.) "+file2.getAbsolutePath());
+
+            System.out.println("\n\nGraf wygenerowany za pomoca Hakimi");
+            System.out.println(holderH.getOut());
+            System.out.println("\n\nGraf wygenerowany za pomoca Prima-Dijkstry");
+            System.out.println(holderPD.getOut());
+            System.out.println("Waga grafu wygenerowana za pomoca algorytmu Hakimi: "+holderH.getOut().getWeight());
+            System.out.println("Waga grafu wygenerowana za pomoca algorytmu Prima-Dijkstry: "+holderPD.getOut().getWeight());
+
+
+
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -20,7 +20,6 @@ public class DijkstraAlgorithm {
     private Map<Vertex, Integer> distance;
 
     public DijkstraAlgorithm(Graph graph) {
-        // create a copy of the array so that we can operate on this array
         this.nodes = new ArrayList<Vertex>(graph.getVertices());
         this.edges = new ArrayList<Edge>(graph.getEdges());
     }
@@ -106,14 +105,9 @@ public class DijkstraAlgorithm {
         }
     }
 
-    /*
-     * This method returns the path from the source to the selected target and
-     * NULL if no path exists
-     */
     public LinkedList<Vertex> getPath(Vertex target) throws NoResultException {
         LinkedList<Vertex> path = new LinkedList<Vertex>();
         Vertex step = target;
-        // check if a path exists
         if (predecessors.get(step) == null) {
             throw new NoResultException();
         }
@@ -122,7 +116,6 @@ public class DijkstraAlgorithm {
             step = predecessors.get(step);
             path.add(step);
         }
-        // Put it into the correct order
         Collections.reverse(path);
 
         if (path == null) throw new NoResultException();

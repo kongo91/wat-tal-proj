@@ -1,5 +1,6 @@
 package pl.edu.wat.wcy.tal.alg.timer;
 
+import pl.edu.wat.wcy.tal.alg.algorithms.Algorithm;
 import pl.edu.wat.wcy.tal.alg.exceptions.BadAlgorithmException;
 import pl.edu.wat.wcy.tal.alg.graph.Graph;
 import pl.edu.wat.wcy.tal.alg.interfaces.AlgorithmInterface;
@@ -33,13 +34,17 @@ public class AlgorithmTimer<T extends AlgorithmInterface> {
      * @param params parameters to algorithms
      * @return time in nanosecond of algorithm
      */
-    public long[] doAlgorithm(Class<T> clazz, Graph in, double... params) throws BadAlgorithmException {
+    public long[] doAlgorithm(Class<T> clazz, Graph in, Algorithm.GraphHolder holder, double... params) throws BadAlgorithmException {
 
         try {
 
+            if (holder == null){
+                holder = new Algorithm.GraphHolder();
+            }
+
             instanceAlgorithmObject(clazz);
             before();
-            alg.getSteinerTree(in,params);
+            holder.setOut(alg.getSteinerTree(in,params));
             after();
 
             long[] results = {timeafter - timebefore, memoryafter - memorybefore};
